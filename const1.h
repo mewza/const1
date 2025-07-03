@@ -1,8 +1,19 @@
 //
-//  const1.h
+//  const1.h - A collection of very handy tools for SIMD development which
+//             most of my projects on this repo rely on
+// 
+//  NOTE: SIMD's simd::isinf simd::isnan is broken in the latest Xcode (16.2)
+//        so I built my own from the ground up, would be nice if Apple would
+//        fix this on compiler level, but for now here is a replacement, along
+//        with other many handy tools I accumulated devleoping projects, including 
+//        ZArray, which I am looking for support on compiler level as well, able 
+//        to quickly reference an array of float vectors by an array of integer
+//        vector, returning corresponding integer indicies values. Get to work, Apple!
 //
 //  Copyright 2022-2025 Dmitry Boldyrev
 //  All rights reserved.
+// 
+//  Report bugs, issues to my email: subband@gmail.com  
 //
 
 #pragma once
@@ -257,32 +268,6 @@ public:
     inline constexpr const1 operator-() const { return const1(-v); }
 };
 
-class const1i {
-public:
-    int iv;
-    constexpr const1i (int value) : iv(value) {}
-    constexpr const1i (unsigned long long value) : iv((int)value) {}
-    inline operator int2v() const {
-        return int2v{iv, iv};
-    }
-    inline operator int4v() const {
-        return int4v{iv, iv, iv, iv};
-    }
-    inline operator int8v() const {
-        return int8v{iv, iv, iv, iv, iv, iv, iv, iv};
-    }
-    inline bool operator < (const const1i &x) const {
-        return true;
-    }
-    inline operator unsigned long long() const {
-        return iv;
-    }
-};
-
-inline constexpr const1i operator""_v(unsigned long long d) {
-    return const1i(d);
-}
-
 #define shufflevector __builtin_shufflevector
 #define convertvector __builtin_convertvector
 
@@ -301,7 +286,6 @@ static __inline float fast_sqrt(float val)  {
         // that represents (e/2)-64 but we want e/2
         return u.val;
 }
-
 
 static __inline float fast_sqrt_2(const float x)
 {
@@ -407,8 +391,6 @@ static inline constexpr double fast_logf(double a)
     double m, r, s, t, i, f;
     int32_t e;
 
- //   return __builtin_log(a);
-    
     if ((a > 0.0) && (a <= 3.40e+38)) { // 0x1.fffffep+127
         m = frexpf(a, &e);
         if (m < 0.666666667) {
@@ -437,8 +419,6 @@ static inline constexpr double fast_logf(double a)
 
 __inline static double fast_expf (double a)
 {
-  //  return __builtin_exp(a);
-    
     double f, r, j, s, t;
     long i, ia;
 
@@ -609,7 +589,7 @@ public:
 private:
    uint64_t fpcr_;
 };
-#endif
+#endif // TARGET_OS_MACCATALYST
 
 static __inline double fast_log2(double x) { return std::log2(x); }
 static __inline double fast_log(double x) { return std::log(x); }
@@ -651,6 +631,7 @@ static inline T simd_fast_atan2(const T &y, const T &x) {
     if (y < 0.0) return -angle;
     return angle;
 }
+
 #define SIMD_ATAN2_FAST(T) \
 template<typename U> requires std::same_as<U, T> \
 static inline U simd_fast_atan2(const U &y, const U& x) { \
