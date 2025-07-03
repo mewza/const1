@@ -1,4 +1,4 @@
- const1.h - A collection of very handy tools for SIMD development which
+ const1.h - A collection of very handy tools for SIMD vector development which
             most of my projects on this repo rely on
 
  Note: you must include simd_c.c into project for ISINF, ISNAN, 
