@@ -773,17 +773,44 @@ static inline float FIXNORM(float v) { return ISNORM( v ) ? v : 0.0f; }
 static inline double FIXNORM(double v) { return ISNORM( v ) ? v : 0.0; }
 //static inline auto FIXNORM(auto v) { return ISNORM( v ) ? v : 0.0; }
 
-static inline simd_float2 FIXNORM(simd_float2 v) {
+static inline simd_float2 FIXNORM(const simd_float2& v) {
     simd_float2 result;
     result.x = ISNORM(v.x) ? v.x : 0.0f;
     result.y = ISNORM(v.y) ? v.y : 0.0f;
     return result;
 }
 
-static inline simd_float4 FIXNORM(simd_float4 v) {
+static inline simd_float4 FIXNORM(const simd_float4& v) {
     return simd_make_float4(
         FIXNORM(v.xy),
         FIXNORM(v.zw)
+    );
+}
+
+static inline simd_float8 FIXNORM(const simd_float8& v) {
+    return simd_make_float8(
+        FIXNORM(v.lo),
+        FIXNORM(v.hi)
+    );
+}
+static inline simd_double2 FIXNORM(const simd_double2& v) {
+    simd_double2 result;
+    result.x = ISNORM(v.x) ? v.x : 0.0f;
+    result.y = ISNORM(v.y) ? v.y : 0.0f;
+    return result;
+}
+
+static inline simd_double4 FIXNORM(const simd_double4& v) {
+    return simd_make_double4(
+        FIXNORM(v.xy),
+        FIXNORM(v.zw)
+    );
+}
+
+static inline simd_double8 FIXNORM(const simd_double8& v) {
+    return simd_make_double8(
+        FIXNORM(v.lo),
+        FIXNORM(v.hi)
     );
 }
 
@@ -1087,95 +1114,6 @@ struct cmplxT {
 
 #endif //D_CMPLX_T
 
-#define THROW_MEM(cond)  if (cond) throw (Converror (Converror::MEM_ALLOC));
-
-template <typename T>
-class Queue
-{
-public:
-    
-    Queue() : myFront(0), myBack(0) {}
-
-    Queue(const T & q) {
-        myFront = myBack = 0;
-        if(!q.empty()) {
-            myFront = myBack = new Node(q.front());
-            NodePointer qPtr = q.myFront->next;
-            while(qPtr != NULL) {
-                myBack->next = new Node(qPtr->data);
-                myBack = myBack->next;
-                qPtr = qPtr->next;
-            }
-        }
-    }
-   
-    ~Queue() {
-        NodePointer prev = myFront, ptr;
-        while(prev != NULL) {
-            ptr = prev->next;
-            delete prev;
-            prev = ptr;
-        }
-    }
-  
-    bool empty() const {
-        return (myFront == NULL);
-    }
-   
-    void push(const T & value) {
-        NodePointer newNodePtr = new Node(value);
-        if(empty()) {
-            myFront = myBack = newNodePtr;
-            newNodePtr->next = NULL;
-        } else {
-            myBack->next = newNodePtr;
-            myBack = newNodePtr;
-            newNodePtr->next = NULL;
-        }
-    }
-    
-    T pop()
-    {
-        T data;
-        if ( !empty() ) {
-            data = myFront->data;
-            NodePointer ptr = myFront;
-            myFront = myFront->next;
-            delete ptr;
-            if (!myFront) myBack = NULL;
-        }
-        return data;
-    }
-   
-    Queue<T>& operator=(const T &q) {
-        if(this != &q) {
-            this->~Queue();
-            if(q.empty()) {
-                myFront = myBack = NULL;
-            } else {
-                myFront = myBack = new Node(q.front());
-                NodePointer qPtr = q.myFront->next;
-                while(qPtr != NULL) {
-                    myBack->next = new Node(qPtr->data);
-                    myBack = myBack->next;
-                    qPtr = qPtr->next;
-                }
-            }
-        }
-        return *this;
-    }
-
-private:
-    class Node {
-    public:
-        T data;
-        Node * next;
-        Node(T value, Node * first = 0) : data(value),
-                                          next(first) {}
-
-    };
-    typedef Node * NodePointer;
-    NodePointer myFront, myBack, queueSize;
-};
+#define THROW_MEM(cond)  if (cond) throw (Converror (Converror::MEM_ALLOC))
 
 #endif // __cplusplus
