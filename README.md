@@ -9,8 +9,8 @@ SIMD's simd::isinf simd::isnan is stil broken even in the latest Xcode
 fix this on compiler level, but for now here is a replacement, along
 with other many handy tools I accumulated devleoping projects, including 
 ZArray, which I am looking for support on compiler level as well, able 
-to quickly reference an array of float vectors by an array of integer
-vector, returning corresponding float vector to the integer index vector.
+to quickly reference an array of float vectors by an integer vector 
+returning corresponding float vector array to the integer index vector.
 This bug in SIMD isinf, isnan has been persistent through many of your 
 XCode releases already, and management seem to out to lunch about it, 
 so get to work, Apple and stop slacking!
