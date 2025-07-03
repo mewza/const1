@@ -14,8 +14,8 @@ returning a float vector with values corresponding to the indices
 of the index vector.
 
 This bug in SIMD isinf, isnan has been persistent through many of your 
-XCode releases already, and management seem to out to lunch about it, 
-so get to work, Apple and stop slacking!
+XCode releases, and management seem to be out to lunch about it, 
+so, get to work, Apple and stop slacking!
 
 Copyright 2022-2025 Dmitry Boldyrev
 All rights reserved.
