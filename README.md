@@ -11,7 +11,8 @@ with other many handy tools I accumulated devleoping projects, including
 ZArray, which I am looking for support on compiler level as well, able 
 to quickly reference an array of float vectors by an array of integer
 vector, returning corresponding float vector to the integer index vector.
-Get to work, Apple and stop slacking!
+This bug in SIMD isinf, isnan has been persistent through many of your 
+XCode releases already, so get to work, Apple and stop slacking!
 
 Copyright 2022-2025 Dmitry Boldyrev
 All rights reserved.
