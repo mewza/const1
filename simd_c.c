@@ -1,3 +1,17 @@
+//
+//  simd_c.c - A collection of very handy tools for SIMD development which
+//             most of my projects on this repo rely on
+// 
+//  Note: you must include simd_c.c into project for ISINF, ISNAN, 
+//        ISNORM, FIXNORM to work properly
+// 
+//  Copyright 2022-2025 Dmitry Boldyrev
+//  All rights reserved.
+// 
+//  Report bugs, issues to my email: subband@gmail.com  
+//
+
+
 #include <simd/simd.h>
 
 int isnanf(float v) {
