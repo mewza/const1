@@ -4,8 +4,8 @@
  Note: you must include simd_c.c into project for ISINF, ISNAN, 
        ISNORM, FIXNORM to work properly
 
-SIMD's simd::isinf simd::isnan is broken in the latest Xcode (16.2)
-so I built my own from the ground up, would be nice if Apple would
+SIMD's simd::isinf simd::isnan is stil broken even in the latest Xcode 
+(16.2), so I built my own from the ground up, would be nice if Apple would
 fix this on compiler level, but for now here is a replacement, along
 with other many handy tools I accumulated devleoping projects, including 
 ZArray, which I am looking for support on compiler level as well, able 
