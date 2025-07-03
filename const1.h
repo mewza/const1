@@ -2,13 +2,16 @@
 //  const1.h - A collection of very handy tools for SIMD development which
 //             most of my projects on this repo rely on
 // 
-//  NOTE: SIMD's simd::isinf simd::isnan is broken in the latest Xcode (16.2)
-//        so I built my own from the ground up, would be nice if Apple would
-//        fix this on compiler level, but for now here is a replacement, along
-//        with other many handy tools I accumulated devleoping projects, including 
-//        ZArray, which I am looking for support on compiler level as well, able 
-//        to quickly reference an array of float vectors by an array of integer
-//        vector, returning corresponding integer indicies values. Get to work, Apple!
+//  Note: you must include simd_c.c into project for ISINF, ISNAN, 
+//        ISNORM, FIXNORM to work properly
+// 
+//  SIMD's simd::isinf simd::isnan is broken in the latest Xcode (16.2)
+//  so I built my own from the ground up, would be nice if Apple would
+//  fix this on compiler level, but for now here is a replacement, along
+//  with other many handy tools I accumulated devleoping projects, including 
+//  ZArray, which I am looking for support on compiler level as well, able 
+//  to quickly reference an array of float vectors by an array of integer
+//  vector, returning corresponding integer indicies values. Get to work, Apple!
 //
 //  Copyright 2022-2025 Dmitry Boldyrev
 //  All rights reserved.
